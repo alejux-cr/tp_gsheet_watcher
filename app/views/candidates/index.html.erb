@@ -1,0 +1,28 @@
+<div class="candidates index">
+    <h2>GoogleSheet Candidates</h2>
+
+    <%= link_to("Refresh", candidates_path, :class => 'action index') %> <br/>
+
+    <table class="listing" summary="Candidate list">
+        <tr class="header">
+            <% @headers.each do |header| %>
+                <th><%= header %></th>
+            <% end %>
+            <th></th>
+        </tr>
+        <% @gsheet_candidates.each do |candidate| %>
+            <% @candidate = candidate %>
+            <%= form_for(@candidate, :url=>{:action=>'create'}) do |f| %>
+                <tr>
+                <td><%= f.text_field(:timestamp, :readonly => true)  %></td>
+                <td><%= f.text_field(:first_name, :readonly => true) %></td>
+                <td><%= f.text_field(:last_name, :readonly => true) %></td>
+                <td><%= f.text_field(:email, :readonly => true ) %></td>
+                <td><%= f.text_field(:phone, :readonly => true ) %></td>
+                <td class="center"><%= @candidate.is_syncronized ?  'Syncronized!' :  f.submit("Syncronize") %> </td>           
+                </tr>
+
+            <% end %>
+        <% end %>
+    </table>
+</div>
