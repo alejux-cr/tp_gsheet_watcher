@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            candidates: []
+        }
+    }
+
     render() {
         return (
-            <div>Dashboard page...wip</div>
+            <div>Dashboard page with candidates...wip</div>
         )
     }
 }
