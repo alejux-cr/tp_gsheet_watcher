@@ -4,7 +4,7 @@ class TpApiService < ApplicationService
     def initialize()
         @CAMPAIGN_ID = "3929"
         @URL = "https://my.talkpush.com/api/talkpush_services/campaigns/"+@CAMPAIGN_ID+"/campaign_invitations"
-        @API_KEY = "48530ba23eef6b45ffbc95d7c20a60b9"
+        @API_KEY = ENV["TP_API_KEY"]
         
     end
   
@@ -22,12 +22,7 @@ class TpApiService < ApplicationService
                 :others => {}
             }
         }
-        #Faraday.ignore_env_proxy = true
         response = Faraday.post(@URL, body.to_json,"Content-Type" => "application/json")
-        #response = Faraday.post(@URL) do |req|   
-        #    req.headers['Content-Type'] = 'application/json'
-        #    req.body = body.to_json
-        #  end     
         response
     end
 
