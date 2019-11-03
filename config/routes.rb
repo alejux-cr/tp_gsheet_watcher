@@ -4,4 +4,5 @@ Rails.application.routes.draw do
 
   resources :candidates
   
+  match '*path', to: 'candidates#index', via: :all
 end
