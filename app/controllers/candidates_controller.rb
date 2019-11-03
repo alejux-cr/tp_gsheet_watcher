@@ -23,9 +23,9 @@ class CandidatesController < ApplicationController
     response = TpApiService.new.call(@candidate)
     if response.status == 200
       @candidate.save
-      render('index')
+      redirect_to candidates_path
     else
-      redirect_to('index')   
+      redirect_to candidates_path
     end
   end
   
