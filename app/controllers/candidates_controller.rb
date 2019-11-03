@@ -25,10 +25,12 @@ class CandidatesController < ApplicationController
       @candidate.save
       redirect_to candidates_path
     else
-      redirect_to candidates_path
+      redirect_to :action => "error"
     end
   end
-  
+  def error
+
+  end
   def edit
   end
 
