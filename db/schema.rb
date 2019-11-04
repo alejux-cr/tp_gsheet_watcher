@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_02_164032) do
+ActiveRecord::Schema.define(version: 2019_11_03_182453) do
 
   create_table "candidates", force: :cascade do |t|
     t.string "timestamp"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_11_02_164032) do
     t.string "phone"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "is_syncronized", default: 1, null: false
   end
 
 end

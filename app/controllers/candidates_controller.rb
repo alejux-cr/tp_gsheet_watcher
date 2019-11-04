@@ -1,31 +1,36 @@
 class CandidatesController < ApplicationController
-  layout false
+  skip_before_action :verify_authenticity_token
 
   def index
     response = GsheetWatcherService.new.call
     @headers = response.values.shift
     @gsheet_candidates = response.values.map do |gsheet_row|
-      #new_date = DateTime.parse(gsheet_row[0]).strftime('%Y-%m-%d %H:%M:%S') 
-      candidate = Candidate.new(:timestamp => gsheet_row[0],:first_name => gsheet_row[1],
-        :last_name => gsheet_row[2],:email => gsheet_row[3],:phone =>gsheet_row[4])
-      found_candidate = Candidate.find_by_timestamp(candidate.timestamp)  
-      candidate.is_syncronized = !found_candidate.nil?
+      candidate_in_db = Candidate.find_by_timestamp(gsheet_row[0])
+      if candidate_in_db
+        candidate = candidate_in_db
+      else
+        candidate = Candidate.new(:timestamp => gsheet_row[0],:first_name => gsheet_row[1],
+        :last_name => gsheet_row[2],:email => gsheet_row[3],:phone =>gsheet_row[4],
+        :is_syncronized => 0)
+      end
       candidate
     end
-    @syncronized_candidates = Candidate.all
+    render json: { candidates: @gsheet_candidates}
   end
 
   def new
   end
 
   def create
+    puts params
     @candidate = Candidate.new(candidate_params)
+    puts @candidate
     response = TpApiService.new.call(@candidate)
     if response.status == 200
       @candidate.save
-      redirect_to candidates_path
+      render json: { candidate: @candidate, error: nil}
     else
-      redirect_to :action => "error"
+      render json: { error:'Error connecting to the API!'}
     end
   end
   def error

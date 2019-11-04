@@ -1,3 +1,3 @@
 class Candidate < ApplicationRecord
-    attr_accessor :is_syncronized
+    validates :timestamp, presence: true
 end
