@@ -29,6 +29,29 @@ export default () => {
             .then(response => response.json())
             .then(data => setCandidates(candidates = [...data.candidates]))
     }, []);
+
+    function syncCandidate(candidate, e) {
+        e.preventDefault();
+        console.log(candidate)
+        var params = {
+            "timestamp": candidate.timestamp,
+            "first_name": candidate.first_name,
+            "last_name": candidate.last_name,
+            "email": candidate.email,
+            "phone": candidate.phone
+        }
+
+        fetch('/api/candidates', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(params)
+        })
+            .then(res => {
+                if (res.status == 200) {
+                    window.location.reload();
+                }
+            })
+    };
     return (
         <Paper className={classes.root}>
             <Table className={classes.table} aria-label="simple table">
@@ -53,7 +76,6 @@ export default () => {
                 </TableHead>
                 <TableBody>
                     {candidates.map(candidate => (
-                        console.log(candidate),
                         < TableRow key={Object(candidate).timestamp} >
                             <TableCell component="th" scope="row">
                                 {Object(candidate).first_name + ' ' + Object(candidate).last_name}
@@ -65,7 +87,7 @@ export default () => {
                                 {Object(candidate).is_syncronized === 1 ?
                                     'Syncronized!'
                                     :
-                                    <Button variant="contained" color="primary" className={classes.button} startIcon={<SyncIcon />}>
+                                    <Button onClick={syncCandidate.bind(this, candidate)} variant="contained" color="secondary" className={classes.button} startIcon={<SyncIcon />}>
                                         Syncronize
                                     </Button>
 
