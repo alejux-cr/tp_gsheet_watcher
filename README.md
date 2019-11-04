@@ -20,7 +20,7 @@ Install dependencies:
 ```bash
 yarn install
 ```
-Run the migrations (Optional: you can start with an empty database):
+Run the migrations:
 ```bash
 rails db:migrate
 ```
