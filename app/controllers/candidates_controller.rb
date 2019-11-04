@@ -4,7 +4,8 @@ class CandidatesController < ApplicationController
   def index
     response = GsheetWatcherService.new.call
     @headers = response.values.shift
-    @gsheet_candidates = response.values.map do |gsheet_row|
+    unsync_candidates = response.values[Candidate.count...response.values.length]
+    @gsheet_candidates = unsync_candidates.map do |gsheet_row|     
       candidate_in_db = Candidate.find_by_timestamp(gsheet_row[0])
       if candidate_in_db
         candidate = candidate_in_db
