@@ -2,8 +2,7 @@ class TpApiService < ApplicationService
 
     
     def initialize()
-        @CAMPAIGN_ID = "3929"
-        @URL = "https://my.talkpush.com/api/talkpush_services/campaigns/"+@CAMPAIGN_ID+"/campaign_invitations"
+        @URL = ENV["TP_URL"]
         @API_KEY = ENV["TP_API_KEY"]
         
     end
