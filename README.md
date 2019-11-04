@@ -28,6 +28,10 @@ Optional: you can start with an empty database:
 ```bash
 rails db:seed
 ```
+Run webpacker:
+```bash
+rails webpacker:install
+```
 Run the app in localhost:3000:
 ```bash
 rails server or rails s
@@ -35,10 +39,6 @@ rails server or rails s
 If you get an error due to TCP config run the same command with the --port 80 flag and open localhost:
 ```bash
 rails s --port 80
-```
-If you get a webpacker compilation error run:
-```bash
-rails webpacker:install
 ```
 For development and code reloading, open another terminal and run: 
 ```bash
