@@ -5,6 +5,7 @@
 
 Requirements:
 ruby '2.6.5'
+yarn
 
 ## Important 
 You need to create in the root dir the .env file and add the following variables:
@@ -25,7 +26,11 @@ rails webpacker:install
 ```
 Run the migrations (Optional: you can start with an empty database):
 ```bash
-rails db:migrate db:seed
+rails db:migrate
+```
+Optional: you can start with an empty database:
+```bash
+rails db:seed
 ```
 Run the app in localhost:3000:
 ```bash

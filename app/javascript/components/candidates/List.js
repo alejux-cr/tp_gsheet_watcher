@@ -32,23 +32,28 @@ export default () => {
 
     const syncCandidates = () => {
         candidates.forEach(candidate => {
-            var params = {
-                "timestamp": candidate.timestamp,
-                "first_name": candidate.first_name,
-                "last_name": candidate.last_name,
-                "email": candidate.email,
-                "phone": candidate.phone
-            }
-            fetch('/api/candidates', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(params)
-            })
-                .then(res => {
-                    if (res.status == 200) {
-                        window.location.reload();
+            {
+                if (Object(candidate).is_syncronized === 0) {
+                    var params = {
+                        "timestamp": candidate.timestamp,
+                        "first_name": candidate.first_name,
+                        "last_name": candidate.last_name,
+                        "email": candidate.email,
+                        "phone": candidate.phone
                     }
-                })
+                    fetch('/api/candidates', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(params)
+                    })
+                        .then(res => {
+                            if (res.status == 200) {
+                                window.location.reload();
+                            }
+                        })
+                }
+            }
+
         })
 
 
