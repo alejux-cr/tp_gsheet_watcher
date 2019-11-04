@@ -22,9 +22,7 @@ class CandidatesController < ApplicationController
   end
 
   def create
-    puts params
     @candidate = Candidate.new(candidate_params)
-    puts @candidate
     response = TpApiService.new.call(@candidate)
     if response.status == 200
       @candidate.save
@@ -34,20 +32,8 @@ class CandidatesController < ApplicationController
     end
   end
   def error
-
   end
-  def edit
-  end
-
-  def update
-  end
-
-  def delete
-  end
-
-  def destroy
-  end
-
+  
   private
   def candidate_params
     params.require(:candidate).permit(:timestamp,:first_name,:last_name,:email,:phone)
