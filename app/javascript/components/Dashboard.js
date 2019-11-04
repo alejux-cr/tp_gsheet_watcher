@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Typography } from '@material-ui/core';
+import { Paper, Grid, Typography, Button } from '@material-ui/core';
+import Refresh from '@material-ui/icons/Refresh';
 import CandidatesList from './candidates/List';
 
 const useStyles = makeStyles(theme => ({
@@ -36,6 +37,9 @@ function Dashboard() {
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
                     <Typography variant="h3" gutterBottom>TalkPush candidates</Typography>
+                    <Button onClick={() => { window.location.reload() }} variant="contained" color="primary" className={classes.button} startIcon={<Refresh />}>
+                        Refresh
+                    </Button>
                 </Paper>
             </Grid>
 

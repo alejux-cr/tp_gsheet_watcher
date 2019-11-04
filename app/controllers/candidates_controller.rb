@@ -1,5 +1,5 @@
 class CandidatesController < ApplicationController
-  layout false
+  skip_before_action :verify_authenticity_token
 
   def index
     response = GsheetWatcherService.new.call
@@ -22,13 +22,15 @@ class CandidatesController < ApplicationController
   end
 
   def create
+    puts params
     @candidate = Candidate.new(candidate_params)
+    puts @candidate
     response = TpApiService.new.call(@candidate)
     if response.status == 200
       @candidate.save
-      redirect_to candidates_path
+      render json: { candidate: @candidate, error: nil}
     else
-      redirect_to :action => "error"
+      render json: { error:'Error connecting to the API!'}
     end
   end
   def error
