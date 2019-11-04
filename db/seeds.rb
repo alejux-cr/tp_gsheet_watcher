@@ -48,3 +48,11 @@ craig = Candidate.create!(
     phone: "6238954",
     is_syncronized: 1
   )
+  david = Candidate.create!(
+    timestamp: "10/18/2019 17:32:46",   
+    first_name: "David",
+    last_name: "Ang",
+    email: "david@gmail.com",
+    phone: "639189460129",
+    is_syncronized: 1
+  )

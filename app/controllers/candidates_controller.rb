@@ -4,7 +4,8 @@ class CandidatesController < ApplicationController
   def index
     response = GsheetWatcherService.new.call
     @headers = response.values.shift
-    @gsheet_candidates = response.values.map do |gsheet_row|
+    unsync_candidates = response.values[Candidate.count...response.values.length]
+    @gsheet_candidates = unsync_candidates.map do |gsheet_row|     
       candidate_in_db = Candidate.find_by_timestamp(gsheet_row[0])
       if candidate_in_db
         candidate = candidate_in_db
@@ -22,9 +23,7 @@ class CandidatesController < ApplicationController
   end
 
   def create
-    puts params
     @candidate = Candidate.new(candidate_params)
-    puts @candidate
     response = TpApiService.new.call(@candidate)
     if response.status == 200
       @candidate.save
@@ -34,20 +33,8 @@ class CandidatesController < ApplicationController
     end
   end
   def error
-
   end
-  def edit
-  end
-
-  def update
-  end
-
-  def delete
-  end
-
-  def destroy
-  end
-
+  
   private
   def candidate_params
     params.require(:candidate).permit(:timestamp,:first_name,:last_name,:email,:phone)
