@@ -9,7 +9,7 @@ ruby '2.6.5'
 ## Important 
 You need to create in the root dir the .env file and add the following variables:
 TP_API_KEY='API key provided'
-TP_URL='TalkPush Post URL to create a candidate with the specific campaign id included'
+TP_URL='https://my.talkpush.com/api/talkpush_services/campaigns/{campaingid}/campaign_invitations'
 ## Installation
 Install the required gems:
 ```bash
