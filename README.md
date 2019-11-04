@@ -7,6 +7,9 @@
 Requirements:
 ruby '2.6.5'
 
+For development and code reloading, open another terminal and run> ruby .\bin\webpack-dev-server
+*** IMPORTANT >> You need to create on the root dir the .env file and create the TP_API_KEY=PROVIDED_KEY_BY_TALKPUSH ***
+
 Install gems:
 bundle install
 
@@ -20,12 +23,10 @@ Run the migrations:
 
 rails db:migrate db:seed
 
-Run this app with the command below and open localhost:3000:
-rails s
+Run this app with the command below and open localhost:3000: rails s
 
 If you get an error due to TCP config run the same command with the --port 80 flag and open localhost:
 rails s --port 80
 
-*** IMPORTANT >> You need to create on the root dir the .env file and create the TP_API_KEY=PROVIDED_KEY ***
 
 * ...

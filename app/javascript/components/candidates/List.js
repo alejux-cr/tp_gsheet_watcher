@@ -87,7 +87,7 @@ export default () => {
                                 {Object(candidate).is_syncronized === 1 ?
                                     'Syncronized!'
                                     :
-                                    <Button onClick={syncCandidate.bind(this, candidate)} variant="contained" color="primary" className={classes.button} startIcon={<SyncIcon />}>
+                                    <Button onClick={syncCandidate.bind(this, candidate)} variant="contained" color="secondary" className={classes.button} startIcon={<SyncIcon />}>
                                         Syncronize
                                     </Button>
 

@@ -37,7 +37,7 @@ function Dashboard() {
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
                     <Typography variant="h3" gutterBottom>TalkPush candidates</Typography>
-                    <Button onClick={() => { window.location.reload() }} variant="contained" color="primary" className={classes.button} startIcon={<Refresh />}>
+                    <Button onClick={() => { window.location.reload() }} variant="contained" color="secondary" className={classes.button} startIcon={<Refresh />}>
                         Refresh
                     </Button>
                 </Paper>
