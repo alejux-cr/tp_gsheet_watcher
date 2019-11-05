@@ -1,15 +1,14 @@
 class GsheetWatcherService < ApplicationService
 
     
-    def initialize()
+    def initialize(start_index)
         @OOB_URI = "urn:ietf:wg:oauth:2.0:oob".freeze
         @APPLICATION_NAME = "Talkpush GoogleSheet Watcher".freeze
         @CREDENTIALS_PATH = "config/credentials.json".freeze
         @TOKEN_PATH = "config/token.yaml".freeze
         @SCOPE = Google::Apis::SheetsV4::AUTH_SPREADSHEETS_READONLY
-        @SERVICE = Google::Apis::SheetsV4::SheetsService.new
         @SPREADSHEET_ID = "1xkofJa5iI3AQE4yWEoHqMTQ1QQ-VDsfUDDwV96QQDVM"
-        @RANGE = "Form Responses 2"
+        @RANGE = "Form Responses 2!A"+(start_index.to_s)+":E"
         @SERVICE = Google::Apis::SheetsV4::SheetsService.new
         @SERVICE.client_options.application_name = @APPLICATION_NAME
         @SERVICE.authorization = authorize

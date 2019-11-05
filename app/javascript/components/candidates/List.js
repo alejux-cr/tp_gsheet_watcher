@@ -28,12 +28,23 @@ export default () => {
         fetch('/api/candidates')
             .then(response => response.json())
             .then(data => setCandidates(candidates = [...data.candidates]))
-    }, []);
 
-    const syncCandidates = () => {
-        candidates.forEach(candidate => {
+        return () => {
+            setCandidates(candidates = [])
+        }
+    }, []);
+    var [reload, setReload] = useState(false);
+
+    const postCandidates = async () => {
+
+        var promise = await syncCandidates();
+        window.location.reload();
+    }
+    async function syncCandidates() {
+        var promise;
+        for (const candidate of candidates) {
             {
-                if (Object(candidate).is_syncronized === 0) {
+                if (Object(candidate).is_syncronized == 0) {
                     var params = {
                         "timestamp": candidate.timestamp,
                         "first_name": candidate.first_name,
@@ -41,29 +52,26 @@ export default () => {
                         "email": candidate.email,
                         "phone": candidate.phone
                     }
-                    fetch('/api/candidates', {
+                    promise = fetch('/api/candidates', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(params)
                     })
-                        .then(res => {
-                            if (res.status == 200) {
-                                window.location.reload();
-                            }
+                        .then(async (res) => {
+                            const st = await res.status;
+                            return Promise.resolve(res)
                         })
                 }
             }
-
-        })
-
-
-
+        }
+        return promise;
     };
+
     return (
         <Paper className={classes.root}>
             {candidates.length > 0 ?
                 <Fragment>
-                    <Button onClick={syncCandidates} variant="contained" color="secondary" className={classes.button} startIcon={<SyncIcon />}>
+                    <Button onClick={postCandidates} variant="contained" color="secondary" className={classes.button} startIcon={<SyncIcon />}>
                         Syncronize
                     </Button>
                     <Table className={classes.table} aria-label="simple table">
@@ -89,21 +97,18 @@ export default () => {
                         <TableBody>
 
                             {candidates.map(candidate => (
-                                < TableRow key={Object(candidate).timestamp} >
-                                    <TableCell component="th" scope="row">
-                                        {Object(candidate).first_name + ' ' + Object(candidate).last_name}
-                                    </TableCell>
-                                    <TableCell align="right">{Object(candidate).email}</TableCell>
-                                    <TableCell align="right">{Object(candidate).phone}</TableCell>
-                                    <TableCell align="right">{Object(candidate).created_at}</TableCell>
-                                    <TableCell align="right">
-                                        {Object(candidate).is_syncronized === 1 ?
-                                            'Syncronized'
-                                            :
-                                            'Pending'
-                                        }
-                                    </TableCell>
-                                </TableRow>
+                                Object(candidate).is_syncronized == 0 ?
+                                    < TableRow key={Object(candidate).timestamp} >
+                                        <TableCell component="th" scope="row">
+                                            {Object(candidate).first_name + ' ' + Object(candidate).last_name}
+                                        </TableCell>
+                                        <TableCell align="right">{Object(candidate).email}</TableCell>
+                                        <TableCell align="right">{Object(candidate).phone}</TableCell>
+                                        <TableCell align="right">{Object(candidate).created_at}</TableCell>
+                                        <TableCell align="right">Pending</TableCell>
+                                    </TableRow>
+                                    :
+                                    null
                             ))}
 
                         </TableBody>
