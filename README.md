@@ -28,10 +28,7 @@ Optional: you can start with an empty database:
 ```bash
 rails db:seed
 ```
-Run webpacker:
-```bash
-rails webpacker:install
-```
+
 Run the app in localhost:3000:
 ```bash
 rails server or rails s
